@@ -1,22 +1,26 @@
 # FaceAnalyzer Application
 
 ## Overview
-The **FaceAnalyzer** application is an AI-powered tool for analyzing faces in an image. It uses advanced facial detection and analysis techniques to extract information such as:
-- Emotion detection with confidence scores
-- Head pose estimation (pitch, yaw, roll)
-- Zone classification to determine which section of the image the face is located in
+**CMS** is a real-time system that tracks student engagement in classrooms using facial expressions and head movements. 
+It provides trainers and institutions with feedback on attention levels and generates reports.
+This system helps regulatory bodies monitor and improve educational sessions effectively.
 
-This project leverages libraries like OpenCV, DeepFace, NumPy, and Pandas for processing images, analyzing emotions, and generating detailed reports. 
+
+This project leverages libraries like OpenCV, NumPy, and Pandas for processing images, analyzing emotions, and generating detailed reports. 
+
 
 ## Features
-- **Face Detection**: Identifies faces and their positions in an image.
-- **Emotion Analysis**: Detects the dominant emotion for each face.
-- **Head Pose Estimation**: Calculates pitch, yaw, and roll angles for each face.
-- **Zone Detection**: Determines the location of the face (left, center, or right zones).
-- **Annotated Output**: Saves an annotated image with visual markers for analysis.
-- **CSV Report**: Generates a CSV file containing face analysis data.
-
+- Combines facial expression recognition and head pose estimation to calculate an engagement score that accurately reflects students' attention levels and emotional states in real time.
+- Provides immediate feedback to Institutions through an intuitive interface, enabling dynamic adjustment of teaching methods based on student engagement and focus levels during the session.
 ---
+
+## Technical Stack
+- **Face Detection** - Resnet50
+- **Facial Expression Analysis** - VGG16-Face
+- **Pose Estimation** - PnP Head pose estimation
+- **LLM Integration** - NVDIA Neva
+- **Framework** - Flask
+- **Database** - Sqlite
 
 ## Getting Started
 Follow these steps to clone and run the application locally.

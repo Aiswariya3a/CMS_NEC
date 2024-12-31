@@ -115,16 +115,17 @@ def analyze_photo(photo_path):
 # Routes for Classroom Monitoring
 @app.route("/", methods=["GET", "POST"])
 def login():
-    """Handle login."""
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        if username == "teacher" and password == "password123":  # Simplified for demonstration
-            session["user"] = username
-            return redirect(url_for("dashboard"))
-        else:
-            return render_template("login.html", error="Invalid credentials")
-    return render_template("login.html")
+   """Handle login."""
+   if request.method == "POST":
+       username = request.form.get("username")
+       password = request.form.get("password")
+       if username == "teacher@gmail.com" and password == "password123":  # Simplified for demonstration
+           session["user"] = username
+           return redirect(url_for("dashboard"))
+       else:
+           return render_template("login.html", error="Invalid credentials")
+   return render_template("login.html")
+
 
 @app.route("/dashboard")
 def dashboard():
@@ -318,6 +319,11 @@ def manage_students():
 def attendance():
     attendance_data = Attendance.query.all()
     return render_template('attendance.html', attendance=attendance_data)
+
+@app.route("/exam-mg")
+def examManagement():
+   return render_template("examManagement.html")
+
 
 if __name__ == "__main__":
     with app.app_context():
