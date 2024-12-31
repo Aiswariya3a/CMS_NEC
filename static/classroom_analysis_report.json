@@ -1,19 +1,19 @@
 {
-    "id": "46f8c2cf-2a87-4bf0-bc55-20f0ab981c31",
+    "id": "a7096463-c17f-4673-afe3-d97a7bb27228",
     "choices": [
         {
             "index": 0,
             "message": {
                 "role": "assistant",
-                "content": "Based on the image provided, the classroom appears to be accessible for individuals with physical disabilities. The classroom has a wheelchair accessible entrance, and there are no stairs or other physical barriers that would prevent individuals with physical disabilities from accessing the classroom. However, the classroom may not be accessible for individuals with visual or auditory impairments. There are no features in the classroom that would accommodate individuals with visual impairments, such as braille or large print materials. Additionally, there are no features in the classroom that would accommodate individuals with auditory impairments, such as closed captioning or sign language interpreters.",
+                "content": "The picture is of a classroom. The infrastructure of the place is good. The students are sitting in the classroom and studying. The classroom is well-lit and has a lot of windows. The students are focused on their studies and are not distracted by the camera.",
                 "name": null
             },
             "finish_reason": "stop"
         }
     ],
     "usage": {
-        "completion_tokens": 115,
-        "prompt_tokens": 795,
-        "total_tokens": 910
+        "completion_tokens": 54,
+        "prompt_tokens": 784,
+        "total_tokens": 838
     }
 }

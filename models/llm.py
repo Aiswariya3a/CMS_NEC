@@ -39,14 +39,14 @@ def analyze_classroom(photo_path):
             {
                 "role": "user",
                 "content": (f'''
-                            Based on the following features, evaluate whether this classroom is accessible for individuals with [physical disabilities/visual impairments/auditory impairments]. Provide a yes/no and reasoning.
+                            Explain the picture, what do you see, how the infrastructure of the place, what are the people doing
                             use <br> for line break
                             <img src="data:image/jpeg;base64,{image_b64}" />
                             '''
                 )
             }
         ],
-        "max_tokens": 1024,
+        "max_tokens": 100,
         "temperature": 0.20,
         "top_p": 0.70,
         "seed": 0,

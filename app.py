@@ -39,16 +39,16 @@ os.makedirs("data", exist_ok=True)
 
 # Utility Functions
 def start_session_if_scheduled():
-        while True:
-            current_time = datetime.now().strftime("%H:%M")  # Get current time in HH:MM format
-            with app.app_context():
-            # Find the next scheduled session based on time
-                session_to_start = Session.query.filter(func.strftime("%H:%M", Session.start_time) == current_time).first()
-                
-                if session_to_start:
-                    # Start the session logic here
-                    start_session(session_to_start.id)
-                    break
+    while True:
+        current_time = datetime.now().strftime("%H:%M")  # Get current time in HH:MM format
+        with app.app_context():
+        # Find the next scheduled session based on time
+            session_to_start = Session.query.filter(func.strftime("%H:%M", Session.start_time) == current_time).first()
+            
+            if session_to_start:
+                # Start the session logic here
+                start_session(session_to_start.id)
+                break
                 
 
         # # Sleep for 60 seconds before checking again
@@ -139,20 +139,18 @@ def dashboard():
 def start_session(session_id):
     """Start the session and analyze engagement at regular intervals."""
     engagement_scores = []
-
-    # Convert to datetime objects
-    start_time = Session.start_time.strftime("%H:%M")
-    end_time = Session.end_time.strftime("%H:%M")
     
+    session_to_start = Session.query.get(session_id)  # Fetch session by ID
 
-    # Calculate the difference in minutes
-    time_diff = end_time - start_time
-    minutes = time_diff.total_seconds() / 60
+    # Ensure to access `start_time` and `end_time` as strings
+    start = datetime.strptime(session_to_start.start_time, "%H:%M")
+    end = datetime.strptime(session_to_start.end_time, "%H:%M")
+    minutes = (end - start).seconds // 60  # Convert seconds to minutes
 
 
     with app.app_context():
         # Process each photo for 5 minutes (capturing a photo every minute)
-        for i in range(int(minutes)):
+        for i in range(minutes):
             # Capture photo at 1-minute intervals
             photo_path = capture_photo(i + 1)
             
@@ -221,6 +219,15 @@ def session_report():
 @app.route('/view_report/<int:session_id>')
 def view_report(session_id):
     # Fetch session data
+        # Fetch session data
+    session = Session.query.get(session_id)
+    if not session:
+        return jsonify({"error": "Session not found"}), 404
+
+    # Fetch engagement report
+    report = EngagementReport.query.filter_by(session_id=session_id).first()
+    if not report:
+        return jsonify({"error": "Engagement report not found"}), 404
     session = Session.query.get_or_404(session_id)
     
     # Path to CSV and JSON files for this session
