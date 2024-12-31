@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Report</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Session Report</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Session Details</h2>
+            <p><strong>Session Name:</strong> {{ session.name }}</p>
+            <p><strong>Date:</strong> {{ session.date }}</p>
+            <p><strong>Start Time:</strong> {{ session.start_time }}</p>
+            <p><strong>End Time:</strong> {{ session.end_time }}</p>
+            <p><strong>Trainer ID:</strong> {{ session.trainer_id }}</p>
+        </section>
+
+        <section>
+            <h2>Engagement Analysis</h2>
+            <p><strong>Overall Engagement Score:</strong> {{ overall_engagement_score }}</p>
+
+            <h3>Engagement Data</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Engagement Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in engagement_df %}
+                    <tr>
+                        <td>{{ row.time }}</td>
+                        <td>{{ row.engagement_score }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Face Analysis Data</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Face ID</th>
+                        <th>Position</th>
+                        <th>Emotion</th>
+                        <th>Engagement Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for face in face_data %}
+                    <tr>
+                        <td>{{ face.face_id }}</td>
+                        <td>{{ face.position }}</td>
+                        <td>{{ face.emotion }}</td>
+                        <td>{{ face.engagement_level }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Classroom Accessibility Report</h2>
+            <p>{{ engagement_report.report_content }}</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Classroom Monitoring System</p>
+    </footer>
+</body>
+</html>
