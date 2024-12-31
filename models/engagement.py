@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import os
 
 def find_common_viewpoint(csv_file):
     # Load the CSV file
@@ -26,7 +27,14 @@ def find_common_viewpoint(csv_file):
 
 def calculate_engagement(csv_file):
     # Load the CSV file
-    data = pd.read_csv(csv_file)
+    if not os.path.exists(csv_file):
+        raise FileNotFoundError(f"The specified file does not exist: {csv_file}")
+    
+    # Load the CSV file
+    try:
+        data = pd.read_csv(csv_file)
+    except Exception as e:
+        raise ValueError(f"Failed to read the CSV file: {csv_file}. Error: {e}")    
         # Ensure all relevant columns are numeric
     data['pose.pitch'] = pd.to_numeric(data['pose.pitch'], errors='coerce')
     data['pose.yaw'] = pd.to_numeric(data['pose.yaw'], errors='coerce')
@@ -41,7 +49,8 @@ def calculate_engagement(csv_file):
         "angry": 5,     # High disengagement
         "surprise": -10,  # Distraction potential
         "fear": -5,      # Discomfort, disengagement
-        "disgust": -30    # Likely disengagement
+        "disgust": -30,    # Likely disengagement
+        "NaN": -100
     }
     
     # Get the zone-wise common viewpoints (pitch, yaw, roll)

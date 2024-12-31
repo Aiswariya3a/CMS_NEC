@@ -1,2 +1,2 @@
-face_id,zone,emotion,confidence,created_at,position.x1,position.y1,position.x2,position.y2,position.center_x,position.center_y,pose.pitch,pose.yaw,pose.roll,pose.confidence
-face_1,center,neutral,0.97,2024-12-31 19:53:21,230,188,366,359,298,273,-24.14,10.45,172.89,1.0
+face_id,zone,pose.pitch,pose.yaw,pose.roll,confidence,emotion
+0,unknown,0.0,0.0,0.0,0.0,None

@@ -176,10 +176,28 @@ class FaceAnalyzer:
         cv2.imwrite(output_image_path, self.original_image)
         logger.info(f"Annotated image saved to {output_image_path}")
 
-        # Save face data to CSV
-        df = pd.json_normalize(self.face_data)
-        df.to_csv(output_csv_path, index=False)
-        logger.info(f"Face data saved to {output_csv_path}")
+        # Save face data to CSV only if data exists
+        if self.face_data:
+            df = pd.json_normalize(self.face_data)
+            df.to_csv(output_csv_path, index=False)
+            logger.info(f"Face data saved to {output_csv_path}")
+        else:
+            logger.warning("No face data available to save to CSV. Saving a placeholder file with default values.")
+            
+            # Create a placeholder DataFrame with default values
+            placeholder_columns = ["face_id", "zone", "pose.pitch", "pose.yaw", "pose.roll", "confidence", "emotion"]
+            placeholder_data = [{
+                "face_id": 0,
+                "zone": "unknown",
+                "pose.pitch": "None",
+                "pose.yaw": "None",
+                "pose.roll": "None",
+                "confidence": "None",
+                "emotion": "None"
+            }]
+            placeholder_df = pd.DataFrame(placeholder_data, columns=placeholder_columns)
+            placeholder_df.to_csv(output_csv_path, index=False)
+            logger.info(f"Placeholder face data saved to {output_csv_path}")
 
 # def main():
 #     image_path = "samples/crowd (1).jpeg"  # Replace with your image path

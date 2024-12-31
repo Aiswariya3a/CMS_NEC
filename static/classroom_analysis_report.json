@@ -1,19 +1,19 @@
 {
-    "id": "a7096463-c17f-4673-afe3-d97a7bb27228",
+    "id": "456fd98b-5524-41c3-baf6-e9917e76b595",
     "choices": [
         {
             "index": 0,
             "message": {
                 "role": "assistant",
-                "content": "The picture is of a classroom. The infrastructure of the place is good. The students are sitting in the classroom and studying. The classroom is well-lit and has a lot of windows. The students are focused on their studies and are not distracted by the camera.",
+                "content": "The picture shows a woman sitting on a bean bag. She is wearing a black t-shirt with a logo on it. The room is painted white and has a blue bean bag. The woman seems to be posing for a picture.",
                 "name": null
             },
             "finish_reason": "stop"
         }
     ],
     "usage": {
-        "completion_tokens": 54,
-        "prompt_tokens": 784,
-        "total_tokens": 838
+        "completion_tokens": 48,
+        "prompt_tokens": 783,
+        "total_tokens": 831
     }
 }
