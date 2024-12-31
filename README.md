@@ -1,4 +1,4 @@
-# FaceAnalyzer Application
+# Classroom Monitoring System
 
 ## Overview
 **CMS** is a real-time system that tracks student engagement in classrooms using facial expressions and head movements. 
