@@ -1,131 +1,741 @@
-/* General styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Sidebar styling */
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  transition: 0.3s;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
+.sidebar.collapsed {
+  width: 0;
+  overflow: hidden;
 }
 
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
+/* Sidebar links */
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
 }
 
-header h1 {
-    margin: 0;
+/* Active/current link */
+.sidebar a.active {
+  background-color: #04aa6d;
+  color: white;
 }
 
-nav {
-    margin-top: 10px;
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
 }
 
-nav a {
-    margin: 0 10px;
-    color: white;
-    text-decoration: none;
-    font-size: 1.1em;
+/* Content area */
+div.content {
+  padding: 20px;
+  height: 100%;
+  transition: margin-left 0.3s;
 }
 
-nav a:hover {
-    text-decoration: underline;
+/* Adjust content margin when sidebar is collapsed */
+div.content.collapsed {
+  margin-left: 0;
+  text-align: center;
 }
 
+/* Top Bar */
+.topbar {
+  background: #555; /* Gradient for a modern look */
+  color: white;
+  padding: 10px 20px;
+  position: fixed;
+  width: 97%;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Hamburger menu */
+.topbar .toggle-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  padding: 0 10px;
+  transition: transform 0.2s ease;
+}
+
+.topbar .toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Dashboard Title */
+.topbar .dashboard-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  flex-grow: 1;
+  text-align: center;
+}
+
+/* User Info Section */
+.topbar .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9em;
+}
+
+.topbar .user-info a {
+  color: #FFD700; /* Gold for a touch of elegance */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.topbar .user-info a:hover {
+  text-decoration: underline;
+  color: #FFA500; /* Slightly darker gold */
+}
+
+/* Username and logout link */
+.user-info {
+  font-size: 16px;
+}
+
+.user-info a {
+  color: white;
+  text-decoration: none;
+  padding-left: 10px;
+}
+
+.user-info a:hover {
+  text-decoration: underline;
+}
+
+/* Adjust content margin for top bar */
+.content {
+  margin-top: 50px; /* Make space for the top bar */
+}
+
+/* Sidebar and content responsiveness */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .topbar {
+    padding: 10px;
+    justify-content: space-between;
+  }
+
+  .hamburger {
+    font-size: 25px;
+  }
+}
+
+/* home session */
+/* General Styles */
+.home {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.home-container {
+  max-width: 1250px;
+  margin-left: 200px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 20px;
+}
+
+.home h2 {
+  color: #444;
+  font-size: 1.em;
+  padding-bottom: 30px;
+  margin-bottom: 10px;
+}
+
+.home p {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+/* Institution Details */
+.home .institution-details {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: center;
+}
+
+/* Institution Engagement Score */
+.home .institution-engagement {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: center;
+}
+
+.home .institution-engagement-score {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.home .score-legend {
+  margin-top: 10px;
+}
+
+.home .score-legend ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.home .score-legend li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9em;
+}
+
+.home .score-legend span {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+}
+
+.home .score-legend .excellent {
+  background-color: #4caf50;
+}
+
+.home .score-legend .good {
+  background-color: #8bc34a;
+}
+
+.home .score-legend .average {
+  background-color: #ffeb3b;
+}
+
+.home .score-legend .bad {
+  background-color: #ff9800;
+}
+
+.home .score-legend .extremely-bad {
+  background-color: #f44336;
+}
+
+/* Trainers Table */
+.home .trainers-table {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.home .data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.home .data-table th, .home .data-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.home .data-table th {
+  background-color: #474848;
+  color: white;
+  font-weight: bold;
+}
+
+.home .data-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.home .data-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+
+
+/* Styling the Session Form */
 section {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+  max-width: 600px;
+  margin: 35px auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+select {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-form label {
-    margin: 10px 0 5px;
+label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
 }
 
-form input, form select, form button {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="email"] select {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
 }
 
-form button {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus {
+  border-color: #04aa6d;
+  outline: none;
 }
 
-form button:hover {
-    background-color: #45a049;
+input[type="email"] {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
 }
 
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
+input[type="email"]:focus select:focus {
+  border: 0.5px solid;
+  border-color: #04aa6d;
+  outline: none;
 }
 
-table th, table td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+button[type="submit"] {
+  background-color: #04aa6d;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-table th {
-    background-color: #f4f4f4;
-}
-
-ul {
-    list-style-type: none;
-}
-
-ul li {
-    margin: 10px 0;
-}
-
-ul li a {
-    text-decoration: none;
-    color: #4CAF50;
-}
-
-ul li a:hover {
-    text-decoration: underline;
+button[type="submit"]:hover {
+  background-color: #039c5c;
 }
 
 /* Responsive Design */
+@media screen and (max-width: 768px) {
+  .content {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  section {
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  input[type="email"] select {
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* students table */
+/* Table Styling */
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  background-color: #f9f9f9;
+}
+
+/* Table Header */
+.students-table thead th {
+  background-color: #474848;
+  color: white;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Table Rows */
+.students-table tbody td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Hover Effect */
+.students-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Alternating Row Colors */
+.students-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* session management */
+.session-reports-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.session-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Session Card Styling */
+.session-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.session-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  background-color: #039c5c;
+  color: #fff;
+  padding: 12px 16px;
+  text-align: center;
+}
+
+.session-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* .session-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555;
+} */
+
+.session-details span {
+  display: block;
+}
+
+.btn-view-report {
+  margin-top: auto;
+  text-decoration: none;
+  background-color: #039c5c;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-view-report:hover {
+  background-color: #005bb5;
+  cursor: pointer;
+}
+
+/* DASHBOARD */
+
+/* Main view container with grid layout */
+.view-report-container {
+  max-width: 1250px;
+  margin-left: 200px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 20px;
+}
+
+/* Session Details Section */
+.view-report .session-details {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  grid-column: 1;
+  text-align: center;
+}
+
+.view-report .engagement-score {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  grid-column: 1;
+  text-align: center;
+}
+
+.view-report .overall-engagement-score {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.view-report .score-legend {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.view-report .score-legend ul {
+  display: flex; /* Make the list display horizontally */
+  padding-left: 0;
+  justify-content: space-evenly; /* Distribute space evenly between items */
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.view-report .score-legend li {
+  margin-bottom: 5px;
+}
+
+.view-report .score-legend span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.view-report .score-legend .excellent {
+  background-color: #4caf50; /* Green for excellent */
+}
+
+.view-report .score-legend .good {
+  background-color: #cfff99; /* Light Green for good */
+}
+
+.view-report .score-legend .average {
+  background-color: #ffeb3b; /* Yellow for average */
+}
+
+.view-report .score-legend .bad {
+  background-color: #ff9800; /* Orange for bad */
+}
+
+.view-report .score-legend .extremely-bad {
+  background-color: #f44336; /* Red for extremely bad */
+}
+
+.view-report .session-details h2 {
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.view-report .session-details p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.view-report .session-details strong {
+  color: #333;
+}
+
+/* Engagement and Face Analysis Section */
+.view-report .engagement-analysis,
+.view-report .face-analysis {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.view-report .small-chart {
+  width: 350px !important; /* Set the width of the chart */
+  height: 350px !important; /* Set the height of the chart */
+  margin: auto;
+  display: block;
+}
+
+.view-report .engagement-analysis h2,
+.view-report .face-analysis h2 {
+  font-size: 1.6rem;
+  padding: 8px;
+  color: #333;
+}
+
+.view-report .engzone-description,
+.view-report .emotion-description {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 10px;
+}
+
+.view-report .data-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  border: 1px solid #e0e0e0;
+}
+
+.view-report .data-table th,
+.view-report .data-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #e0e0e0;
+}
+
+.view-report .data-table th {
+  background-color: #039c5c;
+  color: white;
+  font-weight: bold;
+}
+
+/* Grid Layout for Engagement and Face Analysis Section */
+.view-report .engagement-analysis,
+.view-report .face-analysis {
+  grid-column: span 1;
+}
+
+/* Responsive Layout */
+@media (min-width: 768px) {
+  .view-report-container {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for larger screens */
+  }
+
+  .view-report .session-details,
+  .view-report .engagement-score {
+    grid-column: span 2; /* Make the session details span across both columns */
+  }
+
+  .view-report .engagement-analysis,
+  .view-report .face-analysis {
+    grid-column: span 1; /* Each section will take one column */
+  }
+
+  .view-report .data-table th,
+  .view-report .data-table td {
+    padding: 10px;
+  }
+}
+
+/* Generated Report Section */
+.view-report .accessibility-report {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  grid-column: span 2; /* The report section will span across the full width */
+}
+
+.view-report .accessibility-report h2 {
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.view-report .accessibility-report p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Small Screen Adjustments */
 @media (max-width: 768px) {
-    section {
-        padding: 15px;
-        margin: 10px;
-    }
+  .view-report-container {
+    grid-template-columns: 1fr; /* One column for smaller screens */
+  }
 
-    nav a {
-        font-size: 1em;
-    }
+  .view-report .session-details,
+  .view-report .engagement-analysis,
+  .view-report .face-analysis,
+  .view-report .accessibility-report {
+    grid-column: span 1; /* All sections span the full width on small screens */
+  }
 
-    form input, form select, form button {
-        font-size: 0.9em;
-    }
-
-    table th, table td {
-        font-size: 0.9em;
-    }
+  .view-report .overall-engagement-score {
+    font-size: 1.4rem;
+  }
 }

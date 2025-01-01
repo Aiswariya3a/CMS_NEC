@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import pandas as pd
+import fireducks.pandas as pd
 from . import face_detection
 from deepface import DeepFace
 from datetime import datetime
@@ -198,24 +198,3 @@ class FaceAnalyzer:
             placeholder_df = pd.DataFrame(placeholder_data, columns=placeholder_columns)
             placeholder_df.to_csv(output_csv_path, index=False)
             logger.info(f"Placeholder face data saved to {output_csv_path}")
-
-# def main():
-#     image_path = "samples/crowd (1).jpeg"  # Replace with your image path
-#     output_image = "output/detected_faces_output.jpg"
-#     output_csv = "output/face_data.csv"
-
-#     try:
-#         analyzer = FaceAnalyzer(image_path)
-#         num_faces = analyzer.analyze_faces()
-
-#         if num_faces > 0:
-#             analyzer.save_results(output_image, output_csv)
-#             logger.info(f"Successfully analyzed {num_faces} faces")
-#         else:
-#             logger.warning("No faces detected in the image")
-#     except Exception as e:
-#         logger.error(f"Analysis failed: {str(e)}")
-#         raise
-
-# if __name__ == "__main__":
-#     main()

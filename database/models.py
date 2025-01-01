@@ -1,7 +1,19 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
+from sqlite3 import Connection as SQLite3Connection
 
 db = SQLAlchemy()
+
+# SQLite connection handling
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    if isinstance(dbapi_connection, SQLite3Connection):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA busy_timeout = 60000")  # Set timeout to 60 seconds
+        cursor.close()
+
 
 # Trainer model
 class Trainer(db.Model):

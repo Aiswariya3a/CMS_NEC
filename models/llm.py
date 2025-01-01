@@ -1,6 +1,14 @@
 import requests
 import base64
 import json
+import os
+from dotenv import load_dotenv
+
+# Load the API key from the .env file
+load_dotenv()
+api_key = os.getenv("NVIDIA_API_KEY")
+if not api_key:
+    raise Exception("API key not found in .env file")
 
 def analyze_classroom(photo_path):
     """
@@ -16,8 +24,7 @@ def analyze_classroom(photo_path):
         Exception: If the API call fails or the response is invalid.
     """
     invoke_url = "https://ai.api.nvidia.com/v1/vlm/nvidia/neva-22b"
-    api_key = "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"  # Replace with your actual API key
-    
+
     # Read and encode the image in Base64
     try:
         with open(photo_path, "rb") as f:

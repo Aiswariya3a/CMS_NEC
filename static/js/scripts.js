@@ -14,4 +14,18 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
         }
     });
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+        sidebar.classList.toggle('active');
+        
+        // Adjust content margin
+        if (sidebar.classList.contains('active')) {
+            content.style.marginLeft = '250px';
+        } else {
+            content.style.marginLeft = '0';
+            content.style.textAlign = 'center'; /* Center content horizontally */
+        }
+    }
 });

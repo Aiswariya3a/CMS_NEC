@@ -1,0 +1,75 @@
+{% extends "dashboard.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="home">
+    <main class="home-container">
+        <!-- Institution Details div -->
+        <div class="institution-details">
+            <h2>Institution Details</h2>
+            <p><strong>Institution Name:</strong> {{ institution.name }}</p>
+            <p><strong>Location:</strong> {{ institution.location }}</p>
+            <p><strong>Number of Sessions Conducted:</strong> {{ total_sessions }}</p>
+        </div>
+
+        <!-- Institution Engagement Score div -->
+        <div class="institution-engagement">
+            <h2>Institution Engagement Score</h2>
+            <p><span class="institution-engagement-score">{{ engagement_score }} %</span></p>
+            
+            <!-- Engagement Score Legend -->
+            <div class="score-legend">
+                <ul>
+                    <li><span class="excellent"></span> Excellent</li>
+                    <li><span class="good"></span> Good</li>
+                    <li><span class="average"></span> Average</li>
+                    <li><span class="bad"></span> Bad</li>
+                    <li><span class="extremely-bad"></span> Extremely Bad</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Trainers Table div -->
+        <div class="trainers-table">
+            <h2>Trainers</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Trainer ID</th>
+                        <th>Name</th>
+                        <th>Expertise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trainer in trainers %}
+                    <tr>
+                        <td>{{ trainer.id }}</td>
+                        <td>{{ trainer.name }}</td>
+                        <td>{{ trainer.expertise }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<!-- JavaScript to Dynamically Update Engagement Score Color -->
+<script>
+var institutionScore = parseFloat('{{ engagement_score }}');
+var scoreElement = document.querySelector('.institution-engagement-score');
+
+if (institutionScore >= 90) {
+    scoreElement.style.color = '#4caf50';  // Excellent (green)
+} else if (institutionScore >= 70) {
+    scoreElement.style.color = '#8bc34a';  // Good (light green)
+} else if (institutionScore >= 50) {
+    scoreElement.style.color = '#ffeb3b';  // Average (yellow)
+} else if (institutionScore >= 30) {
+    scoreElement.style.color = '#ff9800';  // Bad (orange)
+} else {
+    scoreElement.style.color = '#f44336';  // Extremely Bad (red)
+}
+</script>
+{% endblock %}

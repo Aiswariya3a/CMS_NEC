@@ -1,40 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Dashboard</title>
-   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-   <header>
-       <h1>Dashboard</h1>
-       <nav>
-           <a href="{{ url_for('home') }}">Home</a> |
-           <a href="{{ url_for('schedule_session') }}">Schedule Session</a> |
-           <a href="{{ url_for('add_trainer') }}">Add Trainer</a> |
-           <a href="{{ url_for('manage_students') }}">Manage Students</a> |
-           <a href="{{ url_for('attendance') }}">Attendance</a>
-           <a href="{{ url_for('session_report') }}">Session Reports</a>
-           <a href="{{ url_for('examManagement') }}">Exam Management</a>
-           <a href="{{ url_for('session_report') }}">Discussions</a>
-           <a href="{{ url_for('session_report') }}">Resource Sharing</a>
-           <a href="{{ url_for('session_report') }}">Substitution Management</a>
-       </nav>
-   </header>
-  
-   <section>
-       <h2>Session Metrics</h2>
-       <p><strong>Total Sessions:</strong> {{ total_sessions }}</p>
-       <p><strong>Attended Sessions:</strong> {{ attended_sessions }}</p>
-       <p><strong>Not Attended Sessions:</strong> {{ not_attended_sessions }}</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Top bar with username, dashboard title, and logout -->
+    <div class="topbar">
+      <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
+      <span class="dashboard-title">Kalvi Koodam.ai</span>
+      <div class="user-info">
+        <span>Teacher</span> |
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </div>
 
-       <h3>Quick Links</h3>
-       <ul>
-           <li><a href="{{ url_for('schedule_session') }}">Schedule a Session</a></li>
-           <li><a href="{{ url_for('view_report', session_id=1) }}">View Session Report</a></li> <!-- Example session ID -->
-       </ul>
-   </section>
-</body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <nav>
+        <a href="{{ url_for('main') }}">Home</a>
+        <a href="{{ url_for('schedule_session') }}">Schedule Session</a>
+        <a href="{{ url_for('session_report') }}">Session Reports</a>
+        <a href="{{ url_for('add_trainer') }}">Add Trainer</a>
+        <a href="{{ url_for('manage_students') }}">Manage Students</a>
+        <a href="{{ url_for('session_report') }}">Attendance</a>
+        <a href="{{ url_for('session_report') }}">Exam Management</a>
+        <a href="{{ url_for('session_report') }}">Discussions</a>
+        <a href="{{ url_for('session_report') }}">Resource Sharing</a>
+        <a href="{{ url_for('session_report') }}">Substitution Management</a>
+      </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">{% block content %}{% endblock %}</div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Function to toggle the sidebar visibility
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar.style.width === "0px") {
+          sidebar.style.width = "200px";
+        } else {
+          sidebar.style.width = "0px";
+        }
+      }
+    </script>
+  </body>
 </html>

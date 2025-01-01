@@ -1,81 +1,217 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Report</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <header>
-        <h1>Session Report</h1>
-    </header>
+{% extends "dashboard.html" %} {% block title %}View Report{% endblock %} {%
+block content %}
+<div class="view-report">
+  <main class="view-report-container">
+    <!-- Session Details div -->
+    <section class="session-details">
+      <h2>Session Details</h2>
+      <p><strong>Session Name:</strong> {{ session.name }}</p>
+      <p><strong>Date:</strong> {{ session.date }}</p>
+      <p><strong>Start Time:</strong> {{ session.start_time }}</p>
+      <p><strong>End Time:</strong> {{ session.end_time }}</p>
+      <p><strong>Trainer ID:</strong> {{ session.trainer_id }}</p>
+    </section>
 
-    <main>
-        <section>
-            <h2>Session Details</h2>
-            <p><strong>Session Name:</strong> {{ session.name }}</p>
-            <p><strong>Date:</strong> {{ session.date }}</p>
-            <p><strong>Start Time:</strong> {{ session.start_time }}</p>
-            <p><strong>End Time:</strong> {{ session.end_time }}</p>
-            <p><strong>Trainer ID:</strong> {{ session.trainer_id }}</p>
-        </section>
+    <!-- Overall Engagement div -->
+    <div class="engagement-score">
+      <h2>Overall Engagement Score</h2>
+      <p>
+        <span class="overall-engagement-score"
+          >{{ overall_engagement_score | float | round(2) }} %</span
+        >
+      </p>
 
-        <section>
-            <h2>Engagement Analysis</h2>
-            <p><strong>Overall Engagement Score:</strong> {{ overall_engagement_score }}</p>
+      <!-- Engagement Score Legend -->
+      <div class="score-legend">
+        <p><strong>Legend:</strong></p>
+        <ul>
+          <li><span class="excellent"></span> Excellent: 90 - 100</li>
+          <li><span class="good"></span> Good: 70 - 89</li>
+          <li><span class="average"></span> Average: 50 - 69</li>
+          <li><span class="bad"></span> Bad: 30 - 49</li>
+          <li><span class="extremely-bad"></span> Extremely Bad: 0 - 29</li>
+        </ul>
+      </div>
+    </div>
 
-            <h3>Engagement Data</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>Engagement Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in engagement_df %}
-                    <tr>
-                        <td>{{ row.time }}</td>
-                        <td>{{ row.engagement_score }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </section>
+    <!-- Accessibility Report div -->
+    <div class="accessibility-report">
+      <h2>Generated Report</h2>
+      <p>{{ engagement_report.report_content }}</p>
+    </div>
 
-        <section>
-            <h2>Face Analysis Data</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Face ID</th>
-                        <th>Position</th>
-                        <th>Emotion</th>
-                        <th>Engagement Level</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for face in face_data %}
-                    <tr>
-                        <td>{{ face.face_id }}</td>
-                        <td>{{ face.position }}</td>
-                        <td>{{ face.emotion }}</td>
-                        <td>{{ face.engagement_level }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </section>
+    <!-- Description for Overall Engagement Score -->
+    <div class="engagement-analysis">
+      <!-- Engagement Score by Zone Chart -->
+      <h2>Engagement Score by Zone</h2>
+      <canvas id="engagementByZoneChart" class="small-chart"></canvas>
+      <p class="engzone-description">
+        The chart shows the distribution of engagement detected in the audience
+        faces in different zones in classroom.
+      </p>
 
-        <section>
-            <h2>Classroom Accessibility Report</h2>
-            <p>{{ engagement_report.report_content }}</p>
-        </section>
-    </main>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Zone</th>
+            <th>Engagement Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in engagement_df %}
+          <tr>
+            <td>{{ row.zone }}</td>
+            <td>{{ row.engagement_score }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
-    <footer>
-        <p>&copy; 2024 Classroom Monitoring System</p>
-    </footer>
-</body>
-</html>
+    <!-- Face Analysis div with Data and Emotion Distribution -->
+    <div class="face-analysis">
+      <h2>Face Analysis Data</h2>
+
+      <!-- Pie chart for Emotion Distribution -->
+      <canvas id="emotionDistributionChart" class="small-chart"></canvas>
+
+      <p class="emotion-description">
+        The chart shows the distribution of emotions detected in the audience
+        faces during the session.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Face ID</th>
+            <th>Emotion</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for face in face_data %}
+          <tr>
+            <td>{{ face.face_id }}</td>
+            <td>{{ face.emotion }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- JavaScript for charting (Using Chart.js) -->
+<script>
+  // Assuming the overall_engagement_score is available as a JavaScript variable
+  var score = parseFloat("{{ overall_engagement_score | float }}");
+
+  // Get the element to change its color
+  var scoreElement = document.querySelector(".overall-engagement-score");
+
+  // Determine the color based on the score value and apply it
+  if (score >= 90) {
+    scoreElement.style.color = "#4caf50"; // Excellent (green)
+  } else if (score >= 70) {
+    scoreElement.style.color = "#cfff99"; // Good (light green)
+  } else if (score >= 50) {
+    scoreElement.style.color = "#ffeb3b"; // Average (yellow)
+  } else if (score >= 30) {
+    scoreElement.style.color = "#ff9800"; // Bad (orange)
+  } else {
+    scoreElement.style.color = "#f44336"; // Extremely Bad (red)
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Create Overall Engagement Score Chart (Bar Chart for Zone)
+  var ctx = document.getElementById('engagementByZoneChart').getContext('2d');
+  var engagementByZoneChart = new Chart(ctx, {
+      type: 'doughnut', // Change to doughnut chart
+      data: {
+          labels: ['Center', 'Left', 'Right', 'Other'], // You can dynamically adjust the zones
+          datasets: [{
+              label: 'Engagement Score by Zone',
+              data: [
+                  {% for zone in ['center', 'left', 'right', 'other'] %}
+                      {% set zone_score = engagement_df | selectattr('zone', 'equalto', zone) | map(attribute='engagement_score') | sum %}
+                      {{ zone_score }},
+                  {% endfor %}
+              ],
+              backgroundColor: [
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(153, 102, 255, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(153, 102, 255, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  position: 'top',
+              },
+              tooltip: {
+                  callbacks: {
+                      label: function(tooltipItem) {
+                          return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2); // Display engagement score in tooltip
+                      }
+                  }
+              }
+          },
+          scales: {
+              y: {
+                  display: false, // Doughnut chart doesn't need y-axis
+              },
+              x: {
+                  display: false, // Doughnut chart doesn't need x-axis
+              }
+          }
+      }
+  });
+
+
+  // Create Emotion Distribution Pie Chart
+  var emotionCtx = document.getElementById('emotionDistributionChart').getContext('2d');
+  var emotionDistributionChart = new Chart(emotionCtx, {
+      type: 'pie',
+      data: {
+          labels: ['Neutral', 'Happy', 'Sad', 'Surprised', 'Angry'],
+          datasets: [{
+              label: 'Emotion Distribution',
+              data: [{% for face in face_data %} {% if face.emotion == 'neutral' %} 1 {% endif %} {% endfor %},
+                     {% for face in face_data %} {% if face.emotion == 'happy' %} 1 {% endif %} {% endfor %},
+                     {% for face in face_data %} {% if face.emotion == 'sad' %} 1 {% endif %} {% endfor %},
+                     {% for face in face_data %} {% if face.emotion == 'surprised' %} 1 {% endif %} {% endfor %},
+                     {% for face in face_data %} {% if face.emotion == 'angry' %} 1 {% endif %} {% endfor %}],
+              backgroundColor: [
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(153, 102, 255, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(153, 102, 255, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+      }
+  });
+</script>
+
+{% endblock %}
