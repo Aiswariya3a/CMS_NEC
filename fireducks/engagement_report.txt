@@ -1,0 +1,239 @@
+COLLEGE ENGAGEMENT ANALYSIS REPORT
+========================================
+
+OVERALL STATISTICS
+--------------------
+Total Records: 25454
+Unique Colleges: 8
+Average Confidence: 0.9249599277127367
+Overall Engagement: 82.71
+
+COLLEGE-WISE STATISTICS
+--------------------
+
+BITS Pilani:
+  Confidence: 0.92
+  Pose.Confidence: 0.95
+  Face Id: 2598
+
+DTU Delhi:
+  Confidence: 0.93
+  Pose.Confidence: 0.95
+  Face Id: 2713
+
+IIT Bombay:
+  Confidence: 0.92
+  Pose.Confidence: 0.95
+  Face Id: 2810
+
+IIT Delhi:
+  Confidence: 0.93
+  Pose.Confidence: 0.95
+  Face Id: 3141
+
+MIT Manipal:
+  Confidence: 0.93
+  Pose.Confidence: 0.95
+  Face Id: 3495
+
+NIT Trichy:
+  Confidence: 0.92
+  Pose.Confidence: 0.95
+  Face Id: 2670
+
+SRM Chennai:
+  Confidence: 0.92
+  Pose.Confidence: 0.95
+  Face Id: 3727
+
+VIT Vellore:
+  Confidence: 0.92
+  Pose.Confidence: 0.95
+  Face Id: 4300
+
+SESSION-WISE STATISTICS
+--------------------
+
+BITS Pilani - Session 1:
+  Confidence: 0.92
+  Face Id: 555
+
+BITS Pilani - Session 2:
+  Confidence: 0.92
+  Face Id: 506
+
+BITS Pilani - Session 3:
+  Confidence: 0.92
+  Face Id: 540
+
+BITS Pilani - Session 4:
+  Confidence: 0.92
+  Face Id: 476
+
+BITS Pilani - Session 5:
+  Confidence: 0.92
+  Face Id: 521
+
+DTU Delhi - Session 1:
+  Confidence: 0.93
+  Face Id: 564
+
+DTU Delhi - Session 2:
+  Confidence: 0.93
+  Face Id: 492
+
+DTU Delhi - Session 3:
+  Confidence: 0.92
+  Face Id: 575
+
+DTU Delhi - Session 4:
+  Confidence: 0.93
+  Face Id: 563
+
+DTU Delhi - Session 5:
+  Confidence: 0.93
+  Face Id: 519
+
+IIT Bombay - Session 1:
+  Confidence: 0.92
+  Face Id: 479
+
+IIT Bombay - Session 2:
+  Confidence: 0.93
+  Face Id: 453
+
+IIT Bombay - Session 3:
+  Confidence: 0.93
+  Face Id: 437
+
+IIT Bombay - Session 4:
+  Confidence: 0.92
+  Face Id: 463
+
+IIT Bombay - Session 5:
+  Confidence: 0.93
+  Face Id: 490
+
+IIT Bombay - Session 6:
+  Confidence: 0.92
+  Face Id: 488
+
+IIT Delhi - Session 1:
+  Confidence: 0.93
+  Face Id: 532
+
+IIT Delhi - Session 2:
+  Confidence: 0.92
+  Face Id: 540
+
+IIT Delhi - Session 3:
+  Confidence: 0.93
+  Face Id: 500
+
+IIT Delhi - Session 4:
+  Confidence: 0.92
+  Face Id: 554
+
+IIT Delhi - Session 5:
+  Confidence: 0.93
+  Face Id: 507
+
+IIT Delhi - Session 6:
+  Confidence: 0.92
+  Face Id: 508
+
+MIT Manipal - Session 1:
+  Confidence: 0.92
+  Face Id: 579
+
+MIT Manipal - Session 2:
+  Confidence: 0.93
+  Face Id: 573
+
+MIT Manipal - Session 3:
+  Confidence: 0.92
+  Face Id: 583
+
+MIT Manipal - Session 4:
+  Confidence: 0.93
+  Face Id: 599
+
+MIT Manipal - Session 5:
+  Confidence: 0.92
+  Face Id: 595
+
+MIT Manipal - Session 6:
+  Confidence: 0.93
+  Face Id: 566
+
+NIT Trichy - Session 1:
+  Confidence: 0.92
+  Face Id: 524
+
+NIT Trichy - Session 2:
+  Confidence: 0.93
+  Face Id: 544
+
+NIT Trichy - Session 3:
+  Confidence: 0.92
+  Face Id: 532
+
+NIT Trichy - Session 4:
+  Confidence: 0.92
+  Face Id: 552
+
+NIT Trichy - Session 5:
+  Confidence: 0.93
+  Face Id: 518
+
+SRM Chennai - Session 1:
+  Confidence: 0.92
+  Face Id: 672
+
+SRM Chennai - Session 2:
+  Confidence: 0.93
+  Face Id: 603
+
+SRM Chennai - Session 3:
+  Confidence: 0.93
+  Face Id: 606
+
+SRM Chennai - Session 4:
+  Confidence: 0.93
+  Face Id: 593
+
+SRM Chennai - Session 5:
+  Confidence: 0.92
+  Face Id: 650
+
+SRM Chennai - Session 6:
+  Confidence: 0.92
+  Face Id: 603
+
+VIT Vellore - Session 1:
+  Confidence: 0.92
+  Face Id: 681
+
+VIT Vellore - Session 2:
+  Confidence: 0.93
+  Face Id: 606
+
+VIT Vellore - Session 3:
+  Confidence: 0.92
+  Face Id: 651
+
+VIT Vellore - Session 4:
+  Confidence: 0.93
+  Face Id: 579
+
+VIT Vellore - Session 5:
+  Confidence: 0.92
+  Face Id: 624
+
+VIT Vellore - Session 6:
+  Confidence: 0.93
+  Face Id: 553
+
+VIT Vellore - Session 7:
+  Confidence: 0.92
+  Face Id: 606

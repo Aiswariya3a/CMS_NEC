@@ -33,49 +33,73 @@ def enhance_image(image):
         image = denoise_image(image)
         return image
 
-def get_image(img_uri: Union[str, np.ndarray]) -> np.ndarray:
-    """
-    Load the given image
-    Args:
-        img_path (str or numpy array): exact image path, pre-loaded numpy array (BGR format)
-            , base64 encoded string and urls are welcome
-    Returns:
-        image itself
-    """
-    # if it is pre-loaded numpy array
-    if isinstance(img_uri, np.ndarray):  # Use given NumPy array
-        img = img_uri.copy()
+# def get_image(img_uri: Union[str, np.ndarray]) -> np.ndarray:
+#     """
+#     Load the given image
+#     Args:
+#         img_path (str or numpy array): exact image path, pre-loaded numpy array (BGR format)
+#             , base64 encoded string and urls are welcome
+#     Returns:
+#         image itself
+#     """
+#     # if it is pre-loaded numpy array
+#     if isinstance(img_uri, np.ndarray):  # Use given NumPy array
+#         img = img_uri.copy()
 
-    # if it is base64 encoded string
-    elif isinstance(img_uri, str) and img_uri.startswith("data:image/"):
-        img = load_base64_img(img_uri)
+#     # if it is base64 encoded string
+#     elif isinstance(img_uri, str) and img_uri.startswith("data:image/"):
+#         img = load_base64_img(img_uri)
 
-    # if it is an external url
-    elif isinstance(img_uri, str) and img_uri.startswith("http"):
-        img = load_image_from_web(url=img_uri)
+#     # if it is an external url
+#     elif isinstance(img_uri, str) and img_uri.startswith("http"):
+#         img = load_image_from_web(url=img_uri)
 
-    # then it has to be a path on filesystem
-    elif isinstance(img_uri, (str, Path)):
-        if isinstance(img_uri, Path):
-            img_uri = str(img_uri)
+#     # then it has to be a path on filesystem
+#     elif isinstance(img_uri, (str, Path)):
+#         if isinstance(img_uri, Path):
+#             img_uri = str(img_uri)
 
-        if not os.path.isfile(img_uri):
-            raise ValueError(f"Input image file path ({img_uri}) does not exist.")
+#         if not os.path.isfile(img_uri):
+#             raise ValueError(f"Input image file path ({img_uri}) does not exist.")
 
-        # pylint: disable=no-member
-        img = cv2.imread(img_uri)
+#         # pylint: disable=no-member
+#         img = cv2.imread(img_uri)
 
+#     else:
+#         raise ValueError(
+#             f"Invalid image input - {img_uri}."
+#             "Exact paths, pre-loaded numpy arrays, base64 encoded "
+#             "strings and urls are welcome."
+#         )
+
+#     # Validate image shape
+#     if len(img.shape) != 3 or np.prod(img.shape) == 0:
+#         raise ValueError("Input image needs to have 3 channels at must not be empty.")
+
+#     return img
+
+
+def get_image(img_path):
+    if isinstance(img_path, str):
+        if not os.path.exists(img_path):
+            raise ValueError(f"Path does not exist: {img_path}")
+        img = cv2.imread(img_path)
+        if img is None:
+            raise ValueError(f"Failed to load image: {img_path}")
+    elif isinstance(img_path, np.ndarray):
+        img = img_path.copy()
     else:
-        raise ValueError(
-            f"Invalid image input - {img_uri}."
-            "Exact paths, pre-loaded numpy arrays, base64 encoded "
-            "strings and urls are welcome."
-        )
-
-    # Validate image shape
-    if len(img.shape) != 3 or np.prod(img.shape) == 0:
-        raise ValueError("Input image needs to have 3 channels at must not be empty.")
-
+        raise ValueError("Invalid input type - expected str or np.ndarray")
+        
+    if img.ndim == 2:  # grayscale
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    elif img.ndim == 3 and img.shape[2] == 4:  # RGBA
+        img = cv2.cvtColor(img, cv2.COLOR_RGBA2BGR)
+    elif img.ndim == 3 and img.shape[2] == 3:  # BGR or RGB
+        pass  # No conversion needed
+    else:
+        raise ValueError(f"Unexpected image format: shape={img.shape}")
+        
     return img
 
 

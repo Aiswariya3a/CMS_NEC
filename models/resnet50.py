@@ -46,7 +46,7 @@ def load_weights(model: Model):
     """
     home = str(os.getenv("DEEPFACE_HOME", default=str(Path.home())))
 
-    exact_file = "C:/Users/deepa/OneDrive/Desktop/Aishu/CMS/project/models/Face-detection.h5"
+    exact_file = "C:/Users/Admin/Desktop/CMSNEC/CMS_NEC_sat/models/Face-detection.h5"
 
     model.load_weights(exact_file)
 

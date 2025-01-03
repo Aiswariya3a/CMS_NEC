@@ -13,7 +13,8 @@ from utils.report_generator import generate_report
 from models.FaceAnalyzer import FaceAnalyzer
 from models.engagement import calculate_engagement
 from models.llm import analyze_classroom
-import fireducks.pandas as pd
+import pandas as pd
+#import pandas as pd
 from contextlib import contextmanager
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.pool import QueuePool
@@ -135,25 +136,77 @@ def load_engagement_scores():
             return json.load(file)
     return []
 
-def capture_photo(photo_number):
-    """Capture a photo using the camera and save it to the upload folder."""
-    cap = cv2.VideoCapture(0)
+# def capture_photo(photo_number):
+#     """Capture a photo using the camera and save it to the upload folder."""
+#     cap = cv2.VideoCapture(0)
     
-    if not cap.isOpened():
-        raise Exception("Could not open camera")
+#     if not cap.isOpened():
+#         raise Exception("Could not open camera")
     
-    ret, frame = cap.read()
+#     ret, frame = cap.read()
     
-    if not ret:
-        cap.release()
-        raise Exception("Failed to capture image")
+#     if not ret:
+#         cap.release()
+#         raise Exception("Failed to capture image")
 
-    photo_path = os.path.join(PHOTO_UPLOAD_DIR, f"photo_{photo_number}.jpg")
-    cv2.imwrite(photo_path, frame)
-    cap.release()
+#     photo_path = os.path.join(PHOTO_UPLOAD_DIR, f"photo_{photo_number}.jpg")
+#     cv2.imwrite(photo_path, frame)
+#     cap.release()
     
-    print(f"Photo {photo_number} captured and saved to {photo_path}")
-    return photo_path
+#     print(f"Photo {photo_number} captured and saved to {photo_path}")
+#     return photo_path
+def capture_photo(photo_number):
+    """Capture a photo using Windows camera and save it to the upload folder."""
+    try:
+        # Convert WSL path to Windows path for the photo
+        photo_path = os.path.join(PHOTO_UPLOAD_DIR, f"photo_{photo_number}.jpg")
+        abs_path = os.path.abspath(photo_path)
+        windows_path = abs_path.replace('/mnt/c', 'C:').replace('/', '\\')
+        
+        # Call the Windows Python script using powershell
+        capture_command = f'powershell.exe python capture_windows.py "{windows_path}"'
+        result = subprocess.run(capture_command, shell=True, capture_output=True, text=True)
+        
+        if result.returncode != 0:
+            raise Exception(f"Camera capture failed: {result.stderr}")
+        
+        if not os.path.exists(photo_path):
+            raise Exception("Photo was not saved correctly")
+            
+        print(f"Photo {photo_number} captured and saved to {photo_path}")
+        return photo_path
+        
+    except Exception as e:
+        print(f"Error capturing photo: {str(e)}")
+        raise Exception(f"Could not capture photo: {str(e)}")
+    
+    
+# def capture_photo(photo_number):
+#     """Capture a photo using the camera and save it to the upload folder."""
+#     # Try different device numbers (0, 1, 2) or the full device path
+#     cap = cv2.VideoCapture("/dev/video0")  # or try different numbers
+    
+#     if not cap.isOpened():
+#         print("Failed to open camera. Trying alternative device...")
+#         # Try alternative device
+#         cap = cv2.VideoCapture(1)  # or try "/dev/video1"
+    
+#     if not cap.isOpened():
+#         raise Exception("Could not open camera")
+    
+#     ret, frame = cap.read()
+    
+#     if not ret:
+#         cap.release()
+#         raise Exception("Failed to capture image")
+
+#     photo_path = os.path.join(PHOTO_UPLOAD_DIR, f"photo_{photo_number}.jpg")
+#     cv2.imwrite(photo_path, frame)
+#     cap.release()
+    
+#     print(f"Photo {photo_number} captured and saved to {photo_path}")
+#     return photo_path
+
 
 def save_engagement_scores(scores):
     """Save engagement scores to file."""
@@ -253,7 +306,7 @@ def start_session(session_id):
                 output_csv_path=face_data_csv
             )
             
-            engagement_df, overall_engagement_score = calculate_engagement(face_data_csv)
+            engagement_df, overall_engagement_score = calculate_engagement("mock_face_data_50k.csv")
             
             print(f"Engagement Score for photo {i + 1}: {overall_engagement_score}")
             print(engagement_df)
@@ -294,6 +347,8 @@ def start_session(session_id):
 
         except Exception as e:
             return jsonify({"success": False, "error": f"LLM Analysis failed: {str(e)}"})
+
+
 
 @app.route('/session_report')
 def session_report():
