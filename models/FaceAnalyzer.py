@@ -1,8 +1,7 @@
 import cv2
 import numpy as np
-import fireducks.pandas as pd
+import pandas as pd
 from . import face_detection
-from deepface import DeepFace
 from datetime import datetime
 from scipy.spatial.transform import Rotation
 import logging
@@ -101,8 +100,8 @@ class FaceAnalyzer:
     def detect_emotion(self, face_image):
         """Detect emotion with confidence score."""
         try:
-            analysis = DeepFace.analyze(
-                face_image, actions=["emotion"], enforce_detection=False, silent=True, 
+            analysis = face_detection.analyze(
+                face_image, actions="emotion", enforce_detection=False, silent=True, 
             )
             emotions = analysis[0]["emotion"]
             dominant_emotion = max(emotions.items(), key=lambda x: x[1])

@@ -1,0 +1,33 @@
+{% extends "dashboard.html" %}
+
+{% block title %}Schedule New Session{% endblock %}
+
+{% block content %}
+<section class="attendance-dashboard">
+    <h1>Attendance Dashboard</h1>
+
+    <!-- Stats Cards -->
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>Total Students</h3>
+            <p>{{ total_students }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Sessions</h3>
+            <p>{{ total_sessions }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Overall Attendance</h3>
+            <p>{{ overall_attendance }}%</p>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <a href="/mark-attendance" class="btn-primary">Mark Attendance</a>
+        <a href="/attendance-report" class="btn-secondary">View Attendance Report</a>
+    </div>
+</section>
+{% endblock %}
+
+

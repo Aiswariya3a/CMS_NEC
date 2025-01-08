@@ -1,4 +1,4 @@
-import fireducks.pandas as pd
+import pandas as pd
 import numpy as np
 import os
 
@@ -121,5 +121,4 @@ def calculate_engagement(csv_file):
 
     # Return both individual scores and overall class engagement score
     return engagement_df, overall_engagement_score
-
 

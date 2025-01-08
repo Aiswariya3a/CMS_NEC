@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 import tensorflow as tf
+from tensorflow.keras.layers import Conv2D
+
 
 tf_version = int(tf.__version__.split(".", maxsplit=1)[0])
 
@@ -44,7 +46,6 @@ def load_weights(model: Model):
         model (Model): Face detection model with its structure and pre-trained weights
 
     """
-    home = str(os.getenv("DEEPFACE_HOME", default=str(Path.home())))
 
     exact_file = "C:/Users/deepa/OneDrive/Desktop/Aishu/CMS/project/models/Face-detection.h5"
 
@@ -64,6 +65,7 @@ def build_model() -> Model:
     )
 
     conv0_pad = ZeroPadding2D(padding=tuple([3, 3]))(bn_data)
+
 
     conv0 = Conv2D(
         filters=64,

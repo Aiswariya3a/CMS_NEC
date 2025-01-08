@@ -1,0 +1,58 @@
+[
+    {
+        "session": "Session 1",
+        "score": 90.7
+    },
+    {
+        "session": "Session 2",
+        "score": 93.78
+    },
+    {
+        "session": "Session 3",
+        "score": 90.565
+    },
+    {
+        "session": "Session 4",
+        "score": 92.62
+    },
+    {
+        "session": "Session 5",
+        "score": 93.36
+    },
+    {
+        "session": "Session 6",
+        "score": NaN
+    },
+    {
+        "session": "Session 7",
+        "score": NaN
+    },
+    {
+        "session": "Session 8",
+        "score": NaN
+    },
+    {
+        "session": "Session 9",
+        "score": 90.0
+    },
+    {
+        "session": "Session 10",
+        "score": 90.0
+    },
+    {
+        "session": "Session 11",
+        "score": 90.0
+    },
+    {
+        "session": "Session 12",
+        "score": 90.0
+    },
+    {
+        "session": "Session 13",
+        "score": 91.655
+    },
+    {
+        "session": "Session 14",
+        "score": 91.38
+    }
+]

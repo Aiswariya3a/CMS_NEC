@@ -1,0 +1,41 @@
+{% extends "dashboard.html" %}
+
+{% block title %}Mark Attendance{% endblock %}
+
+{% block content %}
+<section>
+    <h1>Mark Attendance</h1>
+    <form method="POST" action="/mark-attendance" class="attendance-form">
+        
+        <!-- Session Selection -->
+        <label for="session_id">Select Session:</label>
+        <select name="session_id" id="session_id" required>
+            {% for session in sessions %}
+                <option value="{{ session.id }}">
+                    {{ session.name }} - {{ session.date }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- Student Selection (Table layout) -->
+        <label>Select Students:</label>
+        <div class="checkbox-table">
+            <div class="checkbox-row">
+                <div class="checkbox-cell-head">Student Name</div>
+                <div class="checkbox-cell-head">Present</div>
+            </div>
+            {% for student in students %}
+                <div class="checkbox-row">
+                    <div class="checkbox-cell">{{ student.name }}</div>
+                    <div class="checkbox-cell">
+                        <input type="checkbox" name="attendance" value="{{ student.id }}">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Attendance</button>
+    </form>
+</section>
+{% endblock %}

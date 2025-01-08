@@ -9,11 +9,10 @@ import time
 import threading
 import cv2
 from database.models import db, Trainer, Session, Student, Attendance, EngagementReport
-from utils.report_generator import generate_report
 from models.FaceAnalyzer import FaceAnalyzer
 from models.engagement import calculate_engagement
 from models.llm import analyze_classroom
-import fireducks.pandas as pd
+import pandas as pd
 from contextlib import contextmanager
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.pool import QueuePool
@@ -393,9 +392,91 @@ def manage_students():
 
 @app.route('/attendance')
 def attendance():
-    with session_scope() as session:
-        attendance_data = session.query(Attendance).all()
-        return render_template('attendance.html', attendance=attendance_data)
+    # Calculate attendance metrics
+    total_students = Student.query.count()
+    total_sessions = Session.query.count()
+    total_attendance = Attendance.query.filter_by(present=True).count()
+
+    # Calculate overall attendance percentage
+    overall_attendance = (total_attendance / (total_students * total_sessions)) * 100 if total_sessions > 0 else 0
+
+    return render_template(
+        'attendance_dashboard.html',
+        total_students=total_students,
+        total_sessions=total_sessions,
+        overall_attendance=round(overall_attendance, 2)
+    )
+
+@app.route('/mark-attendance', methods=['GET', 'POST'])
+def mark_attendance():
+    if request.method == 'POST':
+        session_id = request.form['session_id']  # Get session ID from the form
+        student_attendance = request.form.getlist('attendance')  # List of student IDs marked as present
+
+        # Add attendance records for the selected session
+        for student_id in student_attendance:
+            # Check if the attendance record already exists for the session and student
+            existing_record = Attendance.query.filter_by(session_id=int(session_id), student_id=int(student_id)).first()
+            
+            if not existing_record:
+                # If no existing record, create a new attendance record
+                attendance = Attendance(
+                    session_id=int(session_id),
+                    student_id=int(student_id),
+                    present=True
+                )
+                db.session.add(attendance)
+
+        db.session.commit()
+        return redirect('/attendance-report')
+
+    # Fetch all sessions and students for the form
+    sessions = Session.query.order_by(Session.name, Session.date).all()
+    students = Student.query.all()
+
+    return render_template('mark_attendance.html', sessions=sessions, students=students)
+
+
+@app.route('/attendance-report', methods=['GET'])
+def attendance_report():
+    # Get all sessions
+    sessions = Session.query.order_by(Session.date).all()
+
+    # Check if a specific session is selected via query parameter
+    session_id = request.args.get('session_id', type=int)
+    selected_session = None
+    attendance_data = []
+
+    if session_id:
+        # Fetch attendance data for the selected session
+        selected_session = Session.query.get(session_id)
+        attendance_records = (
+            db.session.query(Attendance, Student)
+            .join(Student, Attendance.student_id == Student.id)
+            .filter(Attendance.session_id == session_id)
+            .all()
+        )
+
+        # Format attendance records for the template
+        attendance_data = [
+            {
+                "student_name": record.Student.name,
+                "present": record.Attendance.present
+            }
+            for record in attendance_records
+        ]
+    else:
+        selected_session = None
+        attendance_data = None
+
+    return render_template(
+        'attendance_report.html',
+        sessions=sessions,
+        selected_session=selected_session,
+        attendance_records=attendance_data
+    )
+
+
 
 @app.route("/exam-mg")
 def examManagement():

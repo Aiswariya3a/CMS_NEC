@@ -97,6 +97,8 @@ block content %}
         </tbody>
       </table>
     </div>
+
+    
   </main>
 </div>
 
@@ -183,14 +185,15 @@ block content %}
   var emotionDistributionChart = new Chart(emotionCtx, {
       type: 'pie',
       data: {
-          labels: ['Neutral', 'Happy', 'Sad', 'Surprised', 'Angry'],
+          labels: ['Neutral', 'Happy', 'Sad', 'Surprised', 'Angry', 'Fear'],
           datasets: [{
               label: 'Emotion Distribution',
               data: [{% for face in face_data %} {% if face.emotion == 'neutral' %} 1 {% endif %} {% endfor %},
                      {% for face in face_data %} {% if face.emotion == 'happy' %} 1 {% endif %} {% endfor %},
                      {% for face in face_data %} {% if face.emotion == 'sad' %} 1 {% endif %} {% endfor %},
                      {% for face in face_data %} {% if face.emotion == 'surprised' %} 1 {% endif %} {% endfor %},
-                     {% for face in face_data %} {% if face.emotion == 'angry' %} 1 {% endif %} {% endfor %}],
+                     {% for face in face_data %} {% if face.emotion == 'angry' %} 1 {% endif %} {% endfor %}
+                     {% for face in face_data %} {% if face.emotion == 'fear' %} 1 {% endif %} {% endfor %}],
               backgroundColor: [
                   'rgba(255, 159, 64, 0.2)',
                   'rgba(75, 192, 192, 0.2)',

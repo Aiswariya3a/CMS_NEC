@@ -42,13 +42,13 @@ class Student(db.Model):
 
 # Attendance model (many-to-many relationship between Students and Sessions)
 class Attendance(db.Model):
-    __tablename__ = 'attendance'
     id = db.Column(db.Integer, primary_key=True)
     session_id = db.Column(db.Integer, db.ForeignKey('session.id'), nullable=False)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
-    present = db.Column(db.Boolean, default=False) 
-    session = db.relationship('Session', backref=db.backref('attendance_records', lazy=True))
-    student = db.relationship('Student', backref=db.backref('attendance_records', lazy=True))
+    present = db.Column(db.Boolean, nullable=False)
+
+    session = db.relationship('Session', backref=db.backref('attendances', lazy=True))
+    student = db.relationship('Student', backref=db.backref('attendances', lazy=True))
 
 
 class EngagementReport(db.Model):

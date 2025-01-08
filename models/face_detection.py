@@ -2,6 +2,10 @@ import os
 import warnings
 from typing import Union, Any, Optional, Dict, Tuple, List
 
+from .processing import postprocess
+
+from .utils import package_utils
+
 # this has to be set before importing tf
 os.environ["TF_USE_LEGACY_KERAS"] = "1"
 
@@ -9,8 +13,15 @@ os.environ["TF_USE_LEGACY_KERAS"] = "1"
 import numpy as np
 import tensorflow as tf
 from . import resnet50
-from . import preprocess, postprocess,package_utils
+from .processing import preprocess
 from tensorflow.keras.models import Model
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+
+# package dependencies
+from .utils import package_utils
+from . import Analyse_emotion
 
 
 # users should install tf_keras package if they are using tf 2.16 or later versions
@@ -297,4 +308,28 @@ def extract_faces(
 
         resp.append(facial_img)
 
+
     return resp
+
+
+def analyze(
+        img_path: Union[str, np.ndarray],
+        actions: str="emotion",
+        enforce_detection: bool = True,
+        detector_backend: str = "opencv",
+        align: bool = True,
+        expand_percentage: int = 0,
+        silent: bool = False,
+        anti_spoofing: bool = False,
+) -> List[Dict[str, Any]]:
+
+    return Analyse_emotion.analyze(
+        img_path=img_path,
+        actions=actions,
+        enforce_detection=enforce_detection,
+        detector_backend=detector_backend,
+        align=align,
+        expand_percentage=expand_percentage,
+        silent=silent,
+        anti_spoofing=anti_spoofing,
+    )

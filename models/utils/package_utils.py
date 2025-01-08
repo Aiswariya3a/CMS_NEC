@@ -1,6 +1,13 @@
 # 3rd party dependencies
 import tensorflow as tf
 
+def get_tf_major_version() -> int:
+    """
+    Find tensorflow's major version
+    Returns
+        major_version (int)
+    """
+    return int(tf.__version__.split(".", maxsplit=1)[0])
 
 def validate_for_keras3():
     tf_major = int(tf.__version__.split(".", maxsplit=1)[0])
